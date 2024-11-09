@@ -3,7 +3,8 @@
   "displayName": "metagrapho api",
   "description": "start metagrapho recognition from VS Code",
   "author": {"name": "Gregor Lanzinger", "email": "csae2414@gmail.com"},
-  "version": "0.0.4",
+  "publisher": "csaer2414",
+  "version": "0.0.6",
   "repository": {
     "type": "git",
     "url": "https://github.com/csae2414/vscode-metagrapho-api"
@@ -37,34 +38,34 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.sendImageToEndpoint",
+        "command": "metagrapho-api.sendImageToEndpoint",
         "title": "Send Image to Endpoint"
       }
     ],
     "configuration": {
       "type": "object",
-      "title": "Extension Configuration",
+      "title": "Metagrapho API Configuration",
       "properties": {
-        "extension.modelId": {
+        "metagrapho-api.modelId": {
           "type": "string",
           "description": "Model ID for recognition",
           "default": "51170"
         },
-        "extension.username": {
+        "metagrapho-api.username": {
           "type": "string",
           "description": "Username for authentication"
         },
-        "extension.url": {
+        "metagrapho-api.url": {
           "type": "string",
           "description": "URL of the endpoint",
           "default": "https://transkribus.eu/processing/v1"
         },
-        "extension.use.authentication": {
+        "metagrapho-api.use.authentication": {
           "type": "boolean",
           "description": "Use authentication",
           "default": true
         },
-        "extension.authentication.endpoint": {
+        "metagrapho-api.authentication.endpoint": {
           "type": "string",
           "description": "URL of the authentication endpoint",
           "default": "https://account.readcoop.eu/auth/realms/readcoop"

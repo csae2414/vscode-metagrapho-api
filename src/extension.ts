@@ -4,8 +4,8 @@ import * as fs from 'fs';
 import axios from 'axios';
 
 export function activate(context: vscode.ExtensionContext) {
-  let disposable = vscode.commands.registerCommand('extension.sendImageToEndpoint', async () => {
-    console.log('Extension "send-image-extension" is now active!');
+  let disposable = vscode.commands.registerCommand('metagrapho-api.sendImageToEndpoint', async () => {
+    console.log('Extension "metagrapho-api send-image" is now active!');
     // Prompt the user to select a JPG image file
     const options: vscode.OpenDialogOptions = {
       canSelectMany: false,
@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window.showErrorMessage('Failed to read image file.');
       return;
     }
-    const config = vscode.workspace.getConfiguration('extension');
+    const config = vscode.workspace.getConfiguration('metagrapho-api');
     const useAuthentification = config.get('use.authentication') as boolean;
     const url = config.get('url') as string;
     const authenticationEndpoint = config.get('authentication.endpoint') as string;
@@ -47,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
       const username = config.get('username') as string;
       //const password = config.get('password') as string;
 
-      const passwordKey = 'extension.password';
+      const passwordKey = 'metagrapho-api.password';
       let password = await context.secrets.get(passwordKey);
 
       if (!password) {
@@ -88,6 +88,9 @@ export function activate(context: vscode.ExtensionContext) {
         token = tokenResponse.data.access_token;
       } catch (error: any) {
         vscode.window.showErrorMessage('Failed to get bearer token: ' + error.message);
+        // delete the password from the secrets
+        await context.secrets.delete(passwordKey);
+        vscode.window.showInformationMessage('Password deleted from secrets.');
         return;
       }
     }
@@ -97,7 +100,7 @@ export function activate(context: vscode.ExtensionContext) {
     const payload = {
       config: {
         textRecognition: {
-          htrId: modelId,
+          htrId: Number(modelId),
         },
       },
       image: {
