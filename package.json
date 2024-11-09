@@ -1,0 +1,71 @@
+{
+  "name": "metagrapho-api",
+  "displayName": "metagrapho api",
+  "description": "start metagrapho recognition from VS Code",
+  "author": {"name": "Gregor Lanzinger", "email": "csae2414@gmail.com"},
+  "version": "0.0.4",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "scripts": {
+    "vscode:prepublish": "webpack --mode production",
+    "compile": "webpack --mode development",
+    "watch": "webpack --watch --mode development",
+    "postinstall": "node ./node_modules/vscode/bin/install"
+
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.9",
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.75.0",
+    "install": "^0.13.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^4.0.0",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "supports-color": "^9.4.0"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.sendImageToEndpoint",
+        "title": "Send Image to Endpoint"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "Extension Configuration",
+      "properties": {
+        "extension.modelId": {
+          "type": "string",
+          "description": "Model ID for recognition",
+          "default": "51170"
+        },
+        "extension.username": {
+          "type": "string",
+          "description": "Username for authentication"
+        },
+        "extension.url": {
+          "type": "string",
+          "description": "URL of the endpoint",
+          "default": "https://transkribus.eu/processing/v1"
+        },
+        "extension.use.authentication": {
+          "type": "boolean",
+          "description": "Use authentication",
+          "default": true
+        },
+        "extension.authentication.endpoint": {
+          "type": "string",
+          "description": "URL of the authentication endpoint",
+          "default": "https://account.readcoop.eu/auth/realms/readcoop"
+        }
+      }
+    }
+  }
+}

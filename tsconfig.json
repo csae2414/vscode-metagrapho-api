@@ -1,0 +1,15 @@
+// tsconfig.json
+{
+	"compilerOptions": {
+	  "module": "commonjs",
+	  "target": "es6",
+	  "outDir": "dist",
+	  "sourceMap": true,
+	  "rootDir": "src",
+	  "strict": true,
+	  "esModuleInterop": true,
+	  "skipLibCheck": true,
+	  "types": ["node", "mocha"] // Add "mocha" here
+	},
+	"exclude": ["node_modules", ".vscode-test"]
+  }
