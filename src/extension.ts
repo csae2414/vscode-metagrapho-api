@@ -2,6 +2,7 @@
 import * as vscode from 'vscode';
 import { sendImageToEndpoint } from './sendImageToEndpoint';
 import { getXML } from './getXml';
+import { PageXmlEditorProvider } from './pageXmlEditorProvider';
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -16,6 +17,9 @@ export function activate(context: vscode.ExtensionContext) {
     getXML(context);
   });
   context.subscriptions.push(disposableGetXML);
+
+  // Viewer
+  context.subscriptions.push(PageXmlEditorProvider.register(context));
 }
 
 export function deactivate() { }
