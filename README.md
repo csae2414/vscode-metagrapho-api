@@ -24,14 +24,22 @@ Make sure to have an appropriate subscription to use the Metagrapho API.
 
 This extension contributes the following settings:
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+* metagrapho-api.sendImageToEndpoint: Send image(jpg) to Metagrapho API.
+* metagrapho-api.getXML: Get result from Metagrapho API.
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+* The following error message is shown if the job is still running or failed:
+  "An error occurred while retrieving the XML file: Request failed with status code 404"
 
 ## Release Notes
+
+### 0.0.7
+
+* Get XML-file from last recognition
+* Different naming for Commands:
+  * metagrapho-api: Send Image to Endpoint
+  * metagrapho-api: Get XML from last Image
 
 ### 0.0.4
 
