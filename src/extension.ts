@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import axios from 'axios';
 
 export function activate(context: vscode.ExtensionContext) {
+  
   let disposable = vscode.commands.registerCommand('metagrapho-api.sendImageToEndpoint', async () => {
     console.log('Extension "metagrapho-api send-image" is now active!');
     // Prompt the user to select a JPG image file
@@ -108,18 +109,36 @@ export function activate(context: vscode.ExtensionContext) {
       },
     };
 
-
-
     try {
-      // Send the image to the endpoint
-      await axios.post(url + '/processes', payload, {
+      // Send the image to the endpoint and get the jobid:
+      const response = await axios.post(url + '/processes', payload, {
         headers: {
           accept: 'application/json',
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
+      }).catch((error) => {
+        vscode.window.showErrorMessage('Failed to send image: ' + error.message);
+        throw error;
       });
-      vscode.window.showInformationMessage('Image sent successfully!');
+      
+      // get return code:
+      if (response.status !== 200) {
+        vscode.window.showErrorMessage('Failed to send image: ' + response.statusText);
+        return;
+      }
+      vscode.window.showInformationMessage('Image sent successfully: jobid: ' + response.data.processId + ' status: ' + response.data.status);
+      // store in lastprocessedJobID - field:
+      const lastprocessedJobID = response.data.processId;
+      const lastprocessedJobIDKey = 'metagrapho-api.lastprocessedjobid';
+      try {
+        await context.workspaceState.update(lastprocessedJobIDKey, lastprocessedJobID);
+        const storedValue = context.workspaceState.get(lastprocessedJobIDKey);
+        vscode.window.showInformationMessage('Jobid stored: ' + storedValue);
+      } catch (error: any) {
+        vscode.window.showErrorMessage('Failed to store jobid: ' + error.message);
+        throw error;
+      }
     }
     catch (error: any) {
       vscode.window.showErrorMessage('Failed to send image: ' + error.message);
