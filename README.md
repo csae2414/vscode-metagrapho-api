@@ -34,6 +34,18 @@ This extension contributes the following settings:
 
 ## Release Notes
 
+### 0.0.8
+
+* Simple pagexml visualization:
+
+```
+example.jpg
+page/example.xml
+
+```
+
+* xml - file must have correct filename ('PageimageFilename="" imageWidth...')
+
 ### 0.0.7
 
 * Get XML-file from last recognition
