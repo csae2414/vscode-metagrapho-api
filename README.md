@@ -11,8 +11,9 @@ Currently the following features are supported:
 
 * Authentificate in Transkribus (check if you are eligible to use the Transkribus API)
 * Send an image (of type jpg) to the Metagrapho API
+* Get the result of the recognition (only for last recognition)
+* Show pagexml in editor (view only/line-polygons with text)
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
 
@@ -34,28 +35,10 @@ This extension contributes the following settings:
 
 ## Release Notes
 
-### 0.0.8
+### 0.0.9
 
-* Simple pagexml visualization:
-
-```
-example.jpg
-page/example.xml
-
-```
-
-* xml - file must have correct filename ('PageimageFilename="" imageWidth...')
-
-### 0.0.7
-
-* Get XML-file from last recognition
-* Different naming for Commands:
-  * metagrapho-api: Send Image to Endpoint
-  * metagrapho-api: Get XML from last Image
-
-### 0.0.4
-
-* Send jpg (base64 encoded) to metagrapho-API
+* Better error handling for image preview.
+* When image name in pagexml is not properly defined -> fall back to name of pagexml and [jpg, png, tif] in parent dir of pagexml.
 
 ---
 

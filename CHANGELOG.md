@@ -4,6 +4,11 @@ All notable changes to the "metagrapho-api" extension will be documented in this
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.9]
+
+* Better error handling for image preview.
+* When image name in pagexml is not properly defined -> fall back to name of pagexml and [jpg, png, tif] in parent dir of pagexml.
+
 ## [0.0.8]
 
 * Simple pagexml visualization:

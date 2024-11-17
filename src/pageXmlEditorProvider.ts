@@ -71,10 +71,20 @@ export class PageXmlEditorProvider implements vscode.CustomTextEditorProvider {
         // Extract the image filename and path
         const page = result.PcGts.Page[0];
         const imageFilename = page.$.imageFilename;
-        const imagePath = path.resolve(path.dirname(document.uri.fsPath), '..', imageFilename);
+        var imagePath = path.resolve(path.dirname(document.uri.fsPath), '..', imageFilename);
         if (!fs.existsSync(imagePath)) {
-            vscode.window.showErrorMessage(`Image file not found: ${imageFilename}`);
-            return;
+            vscode.window.showErrorMessage(`Image file in page.xml not found: ${imageFilename}. Falling back to parent directory`);
+            // if image is not found, take the XML file path as the image path, use parent dir and look for image files with same name [jpg, JPEG, png, PNG, tif, TIF]:
+            const imageExt = ['jpg', 'jpeg', 'png', 'tif'];
+            const parentDir = path.resolve(path.dirname(document.uri.fsPath), '..');
+            const xml_base_name = path.basename(document.uri.fsPath, path.extname(document.uri.fsPath));
+            const files = fs.readdirSync(parentDir);
+            imagePath = files.find(file => imageExt.includes(file.split('.').pop() || '') && file.includes(xml_base_name)) || '';
+            if (imagePath === '') {
+                vscode.window.showErrorMessage(`Image file not found in the parent directory: ${parentDir}`);
+            } else {
+                imagePath = path.resolve(parentDir, imagePath);
+            }
         }
 
         // Extract text regions
@@ -105,14 +115,44 @@ export class PageXmlEditorProvider implements vscode.CustomTextEditorProvider {
         };
     }
 
+    private async createBlackBase64Image(width: number, height: number) {
+        // Create a canvas element
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+    
+        // Get the canvas context
+        const ctx = canvas.getContext('2d');
+    
+        // Fill the canvas with black color
+        if (ctx) {
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, width, height);
+        }
+    
+        // Convert the canvas to a base64 image
+        const base64Image = canvas.toDataURL('image/png'); // Default is PNG format
+    
+        return base64Image;
+    }
+
     private async getWebviewContent(webview: vscode.Webview, data: any) {
         const nonce = getNonce();
 
-        const imageUri = webview.asWebviewUri(vscode.Uri.file(data.imagePath));
         const regionsData = JSON.stringify(data.regions);
-        const imageData = await vscode.workspace.fs.readFile(vscode.Uri.file(data.imagePath));
-        const base64Image = Buffer.from(new Uint8Array(imageData)).toString('base64');
-        const imageUri_base64 = `data:image/jpeg;base64,${base64Image}`;
+        var imageUri_base64 = '';
+        try {
+            const imageUri = vscode.Uri.file(data.imagePath);
+            const imageData = await vscode.workspace.fs.readFile(imageUri);
+            const base64Image = Buffer.from(new Uint8Array(imageData)).toString('base64');
+            imageUri_base64 = `data:image/jpeg;base64,${base64Image}`;
+        } catch (error) {
+            vscode.window.showErrorMessage('Failed to read the image file');
+            // print generic image if image file is not found:
+            // Example usage
+            const base64Image = this.createBlackBase64Image(200, 100);
+            imageUri_base64 = `data:image/jpeg;base64,${base64Image}`;
+        }
 
         // HTML content with embedded script and styles
         return `
