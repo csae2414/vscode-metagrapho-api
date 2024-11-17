@@ -4,6 +4,10 @@ All notable changes to the "metagrapho-api" extension will be documented in this
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.10]
+
+* Icon added
+
 ## [0.0.9]
 
 * Better error handling for image preview.
