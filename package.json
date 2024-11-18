@@ -8,7 +8,7 @@
   },
   "publisher": "csaer2414",
   "icon": "images/icon.png",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "repository": {
     "type": "git",
     "url": "https://github.com/csae2414/vscode-metagrapho-api"
