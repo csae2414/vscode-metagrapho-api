@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" 
+      content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; script-src vscode-resource:;">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAGE-XML Viewer</title>
+    <style nonce="{{nonce}}">
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        #canvasContainer {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+        #imageCanvas, #overlayCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="canvasContainer">
+        <canvas id="imageCanvas"></canvas>
+        <canvas id="overlayCanvas"></canvas>
+    </div>
+    <script nonce="{{nonce}}" src="{{scriptUri}}"></script>
+</body>
+</html>
