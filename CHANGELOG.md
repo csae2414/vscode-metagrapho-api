@@ -4,6 +4,10 @@ All notable changes to the "metagrapho-api" extension will be documented in this
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.11]
+
+* load black image with same resolution when image not found
+
 ## [0.0.10]
 
 * Icon added
