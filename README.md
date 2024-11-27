@@ -14,6 +14,8 @@ Currently the following features are supported:
 * Get the result of the recognition (only for last recognition)
 * Show pagexml in editor (view only/line-polygons with text)
 
+![Demo](https://static.imtnet.org/vscode_metagrapho_editor.gif)
+
 ## Requirements
 
 Register here: https://app.transkribus.org/
