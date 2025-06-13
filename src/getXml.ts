@@ -51,11 +51,15 @@ export async function getXML(context: vscode.ExtensionContext) {
 
         // Make the GET request to retrieve the XML file
         var request_url = url + `/processes/${processId}/page`;
+        const headers: any = {
+            accept: 'application/xml'
+        };
+        if (accessToken) {
+            headers['Authorization'] = `Bearer ${accessToken}`;
+        }
+
         const response = await axios.get(request_url, {
-            headers: {
-                accept: 'application/xml',
-                Authorization: `Bearer ${accessToken}`,
-            },
+            headers: headers,
         });
 
         if (response.status === 200) {
