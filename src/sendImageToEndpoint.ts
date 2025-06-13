@@ -82,12 +82,17 @@ export async function sendImageToEndpoint(context: vscode.ExtensionContext) {
 
     try {
         // Send the image to the endpoint and get the jobid:
+        const headers: any = {
+            accept: 'application/json',
+            'Content-Type': 'application/json'
+        };
+
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
         const response = await axios.post(url + '/processes', payload, {
-            headers: {
-                accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
+            headers: headers,
         }).catch((error) => {
             vscode.window.showErrorMessage('Failed to send image: ' + error.message);
             throw error;
